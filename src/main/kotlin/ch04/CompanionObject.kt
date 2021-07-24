@@ -1,29 +1,21 @@
 package ch04
 
-class A {
+open class User3 constructor(val nickname: String) {
     companion object {
-        fun bar() {
-            println("Companion object called")
-        }
+        open fun newSubscribingUser(email: String)
+                = User3(email.substringBefore('@'))
+        fun newSubscribingUser2(email: String)
+                = SubscribingUser()
+    }
+    fun newSubscribingUser3(email: String) : SubscribingUser {
+        println("newSubscribingUser3")
+        return SubscribingUser()
     }
 }
 
-fun getFacebookName(accountId: Int) = "fb:$accountId"
-
-class User private constructor(val nickname: String) {
-    companion object {
-        fun newSubscribingUser(email: String) =
-            User(email.substringBefore('@'))
-
-        fun newFacebookUser(accountId: Int) =
-            User(getFacebookName(accountId))
-    }
+class SubscribingUser() : User3("seohyun") {
 }
 
-fun main(args: Array<String>) {
-    A.bar()
-
-    val subscribingUser = User.newSubscribingUser("bob@gmail.com")
-    val facebookUser = User.newFacebookUser(4)
-    println(subscribingUser.nickname)
+fun main() {
+    User3.newSubscribingUser2("@")
 }
